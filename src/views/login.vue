@@ -39,7 +39,7 @@ export default {
           if (status === 200) {
             const token = data.data.taken;
             // 跳转
-            // this.$router.push('name : login')
+            this.$router.push({name: 'home'});
             // 记录token  setItem 记录
 
             sessionStorage.setItem('token', token);
