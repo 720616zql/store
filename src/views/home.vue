@@ -6,7 +6,7 @@
         <el-row>
             <el-col class="logo" :span="4">此处有logo图片</el-col>
             <el-col class="center" :span="19"><h2>电商后台管理系统</h2></el-col>
-            <el-col class="logout" :span="1"><a href="#">退出</a></el-col>
+            <el-col class="logout" :span="1"><a @click.prevent="handlelogout" href="#">退出</a></el-col>
         </el-row>
     </el-header>
     <el-container>
@@ -15,8 +15,8 @@
             <el-menu
                 default-active="/users"
                 class="menu"
-                unique-opened="ture"
-                router="ture">
+                :unique-opened="true"
+                :router="true">
                 <el-submenu index="1">
                     <template slot="title">
                     <i class="el-icon-menu"></i>
@@ -97,14 +97,30 @@
                 </el-submenu>
             </el-menu>
         </el-aside>
-        <el-main class="main">Main</el-main>
+        <!-- <el-main class="main">Main</el-main> -->
+        <router-view></router-view>
     </el-container>
     </el-container>
 </template>
 
 <script>
 export default {
-
+// 判断是否登录
+  beforeCreate() {
+    //  从sessionStorage 获取 token
+    const token = sessionStorage.getItem('token');
+    if (!token) {
+      this.$router.push({ name: 'login' });
+      this.$message.error('请先登录');
+    }
+  },
+  methods: {
+    handlelogout() {
+      sessionStorage.clear();
+      this.$router.push({ name: 'login' });
+      this.$message.success('退出成功');
+    }
+  }
 };
 </script>
 
