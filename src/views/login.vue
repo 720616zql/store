@@ -37,11 +37,11 @@ export default {
           const data = res.data;
           const {meta: { status, msg }} = data;
           if (status === 200) {
-            const token = data.data.taken;
+            const token = data.data.token;
             // 跳转
             this.$router.push({name: 'home'});
             // 记录token  setItem 记录
-
+            console.log(token);
             sessionStorage.setItem('token', token);
             this.$message.success(msg);
           } else {
